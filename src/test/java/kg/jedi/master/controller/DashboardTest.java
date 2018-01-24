@@ -1,9 +1,11 @@
 package kg.jedi.master.controller;
 
 import kg.jedi.master.common.Constants;
+import kg.jedi.master.repository.MasterRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -22,11 +24,14 @@ public class DashboardTest {
 
     private MockMvc mockMvc;
 
-    private Dashboard controllerUnderTest;
+    @Mock
+    private MasterRepository masterRepositoryMock;
+
+    private DashboardController controllerUnderTest;
 
     @Before
     public void setUp() throws Exception {
-        this.controllerUnderTest = new Dashboard();
+        this.controllerUnderTest = new DashboardController(masterRepositoryMock);
         this.mockMvc = MockMvcBuilders
                 .standaloneSetup(controllerUnderTest)
                 .build();

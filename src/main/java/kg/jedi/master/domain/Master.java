@@ -50,4 +50,14 @@ public class Master extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+
+    public Integer countReviews() {
+        Integer count = 0;
+        if(null != this.reviews && !this.reviews.isEmpty()) {
+            Integer total = reviews.stream().mapToInt(Review::getValue).sum();
+            count = total / reviews.size();
+        }
+
+        return count;
+    }
 }

@@ -6,4 +6,5 @@ package kg.jedi.master.common;
 public class Constants {
 
     public static final String INDEX_PAGE = "index";
+    public static final String APPOINTMENT_PAGE = "appointment";
 }
