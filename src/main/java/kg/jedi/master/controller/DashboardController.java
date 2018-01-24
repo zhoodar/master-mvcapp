@@ -1,6 +1,7 @@
 package kg.jedi.master.controller;
 
-import kg.jedi.master.common.Constants;
+import kg.jedi.master.common.PathNames;
+import kg.jedi.master.domain.Master;
 import kg.jedi.master.repository.MasterRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,13 +23,14 @@ public class DashboardController {
     @GetMapping(value = {"/"})
     public String index(Model model) {
         model.addAttribute("masters", masterRepository.findAll());
-        return Constants.INDEX_PAGE;
+        return PathNames.INDEX_PAGE;
     }
 
     @GetMapping(value = {"/masters/{id:[\\d]+}/appointment"})
-    public String appointment(@PathVariable Long masterId, Model model) {
-        model.addAttribute("master", masterRepository.findOne(masterId));
+    public String appointment(@PathVariable("id") Long masterId, Model model) {
+        Master one = masterRepository.findOne(masterId);
+        model.addAttribute("master", one);
 
-        return Constants.APPOINTMENT_PAGE;
+        return PathNames.APPOINTMENT_PAGE;
     }
 }

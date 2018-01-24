@@ -60,4 +60,12 @@ public class Master extends BaseEntity {
 
         return count;
     }
+
+    public boolean isPersist() {
+        boolean result = false;
+        if (null != id) {
+            return true;
+        }
+        return result;
+    }
 }

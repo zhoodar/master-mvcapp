@@ -34,6 +34,7 @@ public class GenerateTestDataService implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         buildUser(buildRole("ADMIN"), "admin","admin");
+        buildService("fix all the tech","description");
         User master = buildUser(buildRole("MASTER"), "master","master");
 
         buildMaster("mechanic", master);

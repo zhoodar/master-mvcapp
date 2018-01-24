@@ -1,6 +1,6 @@
 package kg.jedi.master.controller;
 
-import kg.jedi.master.common.Constants;
+import kg.jedi.master.common.PathNames;
 import kg.jedi.master.repository.MasterRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -42,7 +42,7 @@ public class DashboardTest {
         MvcResult mvcResult = mockMvc.perform(get("/")).andExpect(status().isOk()).andReturn();
         MockHttpServletResponse response = mvcResult.getResponse();
 
-        assertThat(response.getForwardedUrl()).isEqualTo(Constants.INDEX_PAGE);
+        assertThat(response.getForwardedUrl()).isEqualTo(PathNames.INDEX_PAGE);
     }
 
 }

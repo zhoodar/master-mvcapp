@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Zhoodar on 1/24/18.
  */
 public interface RoleRepository extends JpaRepository<Role, Long> {
+    Role findOneByName(String name);
 }
