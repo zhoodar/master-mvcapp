@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard </title>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <!-- Bootstrap -->
+    <link href="/webjars/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <link href="/css/custom.css" rel="stylesheet"/>
+    <style type="text/css">
+        #contact-form .form-control-feedback {
+            top: 0;
+            right: -15px;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">Master App</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="/">Dashboard</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-9">
+            <div class="row well">
+                <h2>Book an appointment for master: <b th:text="${aptment.master.fullName}"></b></h2>
+
+                <form id="contact-form" th:object="${aptment}" method="post" th:action="@{/aptment/book}">
+
+                    <div class="messages"></div>
+                    <div class="controls">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="form_service">Services</label>
+
+                                    <select id="form_service" class="form-control" th:field="*{service}">
+                                        <option th:each="service : *{master.services}"
+                                                th:field="*{service}"
+                                                th:value="${service}"
+                                                th:text="${service.name}">[s n]
+                                        </option>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Schedule on *:</label>
+                                    <div class="date">
+                                        <div class="input-group input-append date" id="datePicker">
+                                            <input type="text" class="form-control" name="date"
+                                                   th:field="*{scheduledDay}" placeholder="Please pick a day" required/>
+                                            <span class="input-group-addon add-on"><span
+                                                    class="glyphicon glyphicon-calendar"></span></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="scheduledAt">Schedule at *:</label>
+
+                                    <select id="scheduledAt" class="form-control" th:field="*{scheduledAt}" required>
+                                        <option selected value="" disabled>First pick a day..</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="form_fullname">First Name *</label>
+                                    <input id="form_fullname" type="text" th:field="*{clientFName}"
+                                           name="first-name"
+                                           class="form-control" placeholder="Please enter first name *"
+                                           required="required" data-error="Full name is required."/>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="clientname">Last name *</label>
+                                    <input id="clientname" type="text" name="clientname" th:field="*{clientLName}"
+                                           class="form-control" placeholder="Please enter your last name *"
+                                           required="required" data-error="Last name is required."/>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="email">Email * </label>
+                                    <input id="email" type="email" th:field="*{clientEmail}" name="email"
+                                           class="form-control" placeholder="Please enter your email "
+                                           required="required"
+                                           data-error="Email is required"/>
+                                    <div class=" help-block with-errors">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="form_phone">Phone</label>
+                                    <input id="form_phone" type="text" th:field="*{clientPhone}" name="phone"
+                                           class="form-control"
+                                           placeholder="Please enter phone"/>
+                                    <div class="help-block with-errors"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="submit" class="btn col-xs-4 btn-success btn-send" value="Book">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
+<script src="/webjars/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="/js/bootstrap-datepicker.min.js"></script>
+<script>
+    jQuery(document).ready(function () {
+        var url = "http://localhost:8080";
+
+        jQuery('#datePicker')
+            .datepicker({
+                autoclose: true,
+                format: 'yyyy-mm-dd'
+            })
+            .on('changeDate', function (e) {
+                ajaxGetDayHour()
+            });
+
+        function ajaxGetDayHour() {
+            jQuery.ajax({
+                type: "GET",
+                url: "/appointment/hours",
+                success: function (data) {
+                    fillData(data);
+                },
+                error: function (e) {
+                    fillData(null);
+                }
+            });
+        }
+
+        function fillData(data) {
+            $(".form-group #scheduledAt").empty();
+
+            if (data != null) {
+                $(".form-group #scheduledAt").append(data);
+            } else {
+                $(".form-group #scheduledAt").append("<option selected value='' > Pick another day, this day busy </option>");
+            }
+        }
+    });
+</script>
+</body>
+</html>
