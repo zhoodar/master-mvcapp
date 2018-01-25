@@ -7,7 +7,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 /**
  * @author Jedi on 1/24/18.
@@ -33,10 +32,10 @@ public class Appointment extends BaseEntity {
     private String clientPhone;
 
     @Column(name = "scheduled_day")
-    private LocalDate scheduledDay;
+    private LocalDate scheduledDate;
 
     @Column(name = "scheduled_at")
-    private LocalTime scheduledAt;
+    private String scheduledAt;
 
     @ManyToOne
     @JoinColumn(name = "master_id", nullable = false)
@@ -45,4 +44,7 @@ public class Appointment extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "service_id", nullable = false)
     private Service service;
+
+    @Transient
+    private String scheduledDay;
 }

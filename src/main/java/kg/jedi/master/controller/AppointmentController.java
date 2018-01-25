@@ -13,7 +13,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -41,10 +46,21 @@ public class AppointmentController {
     }
 
     @PostMapping("/aptment/book")
-    public String bookAppointment(@PathVariable("id") Long id, Appointment appointment, SessionStatus status) {
+    public String bookAppointment(Appointment appointment, SessionStatus status) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        Date date = new Date();
+        try {
+            date = dateFormat.parse(appointment.getScheduledDay());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        appointment.setScheduledDate(localDate);
+
         appointmentRepository.save(appointment);
         status.setComplete();
-        return "redirect:/masters/" + id;
+        return "redirect:/masters/" + appointment.getMaster().getId();
     }
 
     @ResponseBody
@@ -59,7 +75,7 @@ public class AppointmentController {
 
         for (int i = 0; i <= random; i++) {
             LocalTime plus = localTime.plusHours((long) i);
-            sb.append(" <option value='" +plus.toString() +"'>" +plus.getHour() + ":00 </option> ");
+            sb.append(" <option value='" +plus.getHour()+":00'>" +plus.getHour() + ":00 </option> ");
         }
 
         return sb.toString();

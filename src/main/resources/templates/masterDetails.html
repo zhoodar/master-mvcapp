@@ -70,7 +70,6 @@
                     <th>Reviews:</th>
 
                     <td>
-
                         <div class="row">
                             <span th:each="review : ${master.reviews}" th:text="|${review.value}; |"></span>
                         </div>
@@ -83,6 +82,37 @@
                     </td>
                 </tr>
             </table>
+        </div>
+    </div>
+
+    <h2>Master Appointments </h2>
+
+    <div class="row">
+        <div class="col-md-8">
+
+            <table class="table hover">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Scheduled On</th>
+                    <th>Scheduled At</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="appt : ${master.appointments}">
+                    <td th:text="${appt.id}"></td>
+                    <td th:text="${appt.clientFName}"></td>
+                    <td th:text="${appt.clientLName}"></td>
+                    <td th:text="${appt.clientEmail}"></td>
+                    <td th:text="${appt.scheduledDate}"></td>
+                    <td th:text="${appt.scheduledAt}"></td>
+                </tr>
+                </tbody>
+            </table>
+
         </div>
     </div>
 

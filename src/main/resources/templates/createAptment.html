@@ -50,11 +50,12 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="form_service">Services</label>
+                                    <input th:field="*{master}" hidden>
 
                                     <select id="form_service" class="form-control" th:field="*{service}">
                                         <option th:each="service : *{master.services}"
                                                 th:field="*{service}"
-                                                th:value="${service}"
+                                                th:value="${{service}}"
                                                 th:text="${service.name}">[s n]
                                         </option>
                                     </select>
@@ -152,7 +153,7 @@
         jQuery('#datePicker')
             .datepicker({
                 autoclose: true,
-                format: 'yyyy-mm-dd'
+                format: 'dd-mm-yyyy'
             })
             .on('changeDate', function (e) {
                 ajaxGetDayHour()
