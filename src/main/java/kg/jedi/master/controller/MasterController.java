@@ -7,17 +7,22 @@ import kg.jedi.master.repository.ServiceRepository;
 import kg.jedi.master.service.MasterService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Jedi on 1/24/18.
  */
 @Controller
+@RequestMapping(value = "/masters")
 public class MasterController {
 
     private final MasterService masterService;
@@ -28,7 +33,7 @@ public class MasterController {
         this.serviceRepository = serviceRepository;
     }
 
-    @GetMapping(value = "/masters/new")
+    @GetMapping(value = "/new")
     public String initCreationForm(Model model) {
         Master master = new Master();
         List<Service> services = serviceRepository.findAll();
@@ -38,28 +43,35 @@ public class MasterController {
         return PathNames.CoU_PAGE;
     }
 
-    @PostMapping(value = "/masters/new")
+    @PostMapping(value = "/new")
     public String processCreationForm(@Valid Master master, SessionStatus status) {
         this.masterService.save(master);
         status.setComplete();
         return "redirect:/";
     }
 
-    @GetMapping(value = "/masters/{id:[\\d]+}/edit")
+    @GetMapping(value = "/{id:[\\d]+}/edit")
     public String initUpdateMasterForm(@PathVariable("id") Long id, Model model) {
         Master master = this.masterService.findById(id);
-        model.addAttribute(master);
+        List<Service> services = serviceRepository.findAll();
+
+        for (Service s : master.getServices()) {
+            services = services.stream().filter(service -> !service.equals(s)).collect(Collectors.toList());
+        }
+
+        model.addAttribute("master", master);
+        model.addAttribute("services", services);
         return PathNames.CoU_PAGE;
     }
 
-    @PutMapping(value = "/masters/{id:[\\d]+}/edit")
+    @PostMapping(value = "/{id:[\\d]+}/edit")
     public String processUpdateMasterForm(@Valid Master master, SessionStatus status) {
         this.masterService.update(master);
         status.setComplete();
         return "redirect:/";
     }
 
-    @GetMapping("/masters/{id:[\\d]+}")
+    @GetMapping("/{id:[\\d]+}")
     public ModelAndView showMaster(@PathVariable("id") Long id) {
         ModelAndView mav = new ModelAndView("masterDetails");
         Master master = this.masterService.findById(id);
@@ -67,11 +79,10 @@ public class MasterController {
         return mav;
     }
 
-    @DeleteMapping("maters/{id:[\\d]+}")
-    public String delete(@PathVariable("id") Long id, Model model) {
+    @GetMapping("/{id:[\\d]+}/delete")
+    public String delete(@PathVariable("id") Long id, SessionStatus status) {
         masterService.delete(id);
-        List<Master> masters = masterService.findAll();
-        model.addAttribute("masters", masters);
-        return PathNames.INDEX_PAGE;
+        status.setComplete();
+        return "redirect:/";
     }
 }

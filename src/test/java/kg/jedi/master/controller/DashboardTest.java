@@ -2,6 +2,7 @@ package kg.jedi.master.controller;
 
 import kg.jedi.master.common.PathNames;
 import kg.jedi.master.repository.MasterRepository;
+import kg.jedi.master.repository.ReviewRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -27,11 +28,14 @@ public class DashboardTest {
     @Mock
     private MasterRepository masterRepositoryMock;
 
+    @Mock
+    private ReviewRepository reviewRepository;
+
     private DashboardController controllerUnderTest;
 
     @Before
     public void setUp() throws Exception {
-        this.controllerUnderTest = new DashboardController(masterRepositoryMock);
+        this.controllerUnderTest = new DashboardController(masterRepositoryMock, reviewRepository);
         this.mockMvc = MockMvcBuilders
                 .standaloneSetup(controllerUnderTest)
                 .build();

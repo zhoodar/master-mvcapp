@@ -6,6 +6,7 @@ package kg.jedi.master.common;
 public class PathNames {
 
     public static final String INDEX_PAGE = "index";
-    public static final String APPOINTMENT_PAGE = "appointment";
+    public static final String APPOINTMENT_PAGE = "createAptment";
     public static final String CoU_PAGE = "createOrUpdateMaster";
+    public static final String REVIEW_PAGE = "review";
 }

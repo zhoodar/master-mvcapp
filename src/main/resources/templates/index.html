@@ -31,32 +31,70 @@
 </nav>
 
 <div class="container">
-    <h2>Masters</h2>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th style="width: 150px;">Name</th>
-            <th style="width: 200px;">Address</th>
-            <th>City</th>
-            <th>Telephone</th>
-            <th>Review</th>
-            <th>Book an appointment</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="row">
+        <div class="row">
+            <div class="col-md-10">
+                <h2>Masters</h2>
+            </div>
+            <div class="col-md-1">
+                <a class="btn btn-default" th:href="@{/masters/new}" role="button">
+                    <span class="glyphicon glyphicon-plus"></span> Add Master
+                </a>
+            </div>
+        </div>
 
-        <tr th:each="master : ${masters}">
-            <td th:text="${master.fullName}">Mary Smith</td>
-            <td th:text="${master.address}">45, Oxford Street</td>
-            <td th:text="${master.city}">Cambridge</td>
-            <td th:text="${master.phone}">555-555-555</td>
-            <td th:text="${master.countReviews()}">
-            <td>
-                <a href="#"
-                   th:href="@{|/masters/${master.id}|}">Book</a></td>
-        </tr>
-        </tbody>
-    </table>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th style="width: 150px;">Name</th>
+                <th style="width: 200px;">Address</th>
+                <th>City</th>
+                <th>Telephone</th>
+                <th>Review</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr th:each="master : ${masters}">
+                <td><a href="#" th:href="@{|/masters/${master.id}|}">
+                        <span th:text="${master.fullName}"></span>
+                    </a>
+                </td>
+                <td th:text="${master.address}">[address]</td>
+                <td th:text="${master.city}">[city]</td>
+                <td th:text="${master.phone}">[phone]</td>
+                <td>
+                    <a href="#" th:href="@{|/masters/${master.id}/review/new|}">
+                        <span class="glyphicon glyphicon-star"></span><span th:text="${master.countReviews()}"></span>
+                    </a>
+                </td>
+                <td>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <a href="#"
+                               th:href="@{|/masters/${master.id}/aptment/new|}">
+                                <span class="glyphicon glyphicon-book"></span> book an appointment</a>
+                        </div>
+                        <div class="col-md-3">
+                            <a href="#"
+                               th:href="@{|/masters/${master.id}/edit|}">
+                                <span class="glyphicon glyphicon-pencil"></span> Edit
+                            </a>
+
+                        </div>
+                        <div class="col-md-3">
+                            <a th:href="@{|/masters/${master.id}/delete|}">
+                                <span class="glyphicon glyphicon-remove"></span> Delete</a>
+                        </div>
+                    </div>
+
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>

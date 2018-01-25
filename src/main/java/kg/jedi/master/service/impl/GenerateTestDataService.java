@@ -4,10 +4,7 @@ import kg.jedi.master.domain.Master;
 import kg.jedi.master.domain.Role;
 import kg.jedi.master.domain.Service;
 import kg.jedi.master.domain.User;
-import kg.jedi.master.repository.MasterRepository;
-import kg.jedi.master.repository.RoleRepository;
-import kg.jedi.master.repository.ServiceRepository;
-import kg.jedi.master.repository.UserRepository;
+import kg.jedi.master.repository.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +21,7 @@ public class GenerateTestDataService implements CommandLineRunner {
     private final MasterRepository masterRepository;
     private final ServiceRepository serviceRepository;
 
-    public GenerateTestDataService(UserRepository userRepository, RoleRepository roleRepository, MasterRepository masterRepository, ServiceRepository serviceRepository) {
+    public GenerateTestDataService(UserRepository userRepository, RoleRepository roleRepository, MasterRepository masterRepository, ServiceRepository serviceRepository, AppointmentRepository appointmentRepository, ReviewRepository reviewRepository) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.masterRepository = masterRepository;
@@ -34,10 +31,12 @@ public class GenerateTestDataService implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         buildUser(buildRole("ADMIN"), "admin","admin");
-        buildService("fix all the tech","description");
+        buildService("fix all type computers", "description");
+        buildService("fix all type smart phones", "description");
+        buildService("fix all type vehicle problems", "description");
         User master = buildUser(buildRole("MASTER"), "master","master");
 
-        buildMaster("mechanic", master);
+        buildMaster("Master Baker", master);
     }
 
 
@@ -68,7 +67,7 @@ public class GenerateTestDataService implements CommandLineRunner {
         m.setFullName("Master Pi");
         m.setAddress("Kiev 94");
         m.setCity("Gotham");
-        m.setServices(Collections.singletonList(buildService(masterOf, "desc goes here")));
+        m.setServices(Collections.singletonList(buildService("cook, bake any kind of pies, cakes ", "desc goes here")));
         m.setEmail("email@mail.kg");
         m.setPhone("07XXX XX-XX-XX");
         m.setUser(user);

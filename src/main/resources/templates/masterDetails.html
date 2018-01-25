@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Dashboard </title>
     <meta charset="utf-8"/>
@@ -24,7 +24,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Dashboard</a></li>
+                <li><a href="/">Dashboard</a></li>
             </ul>
         </div>
     </div>
@@ -32,7 +32,59 @@
 
 <div class="container">
 
-    <h2>Master of </h2>
+    <h2>Master Information </h2>
+
+    <div class="row">
+        <div class="col-md-8">
+            <table class="table table-striped">
+                <tr>
+                    <th>Name:</th>
+                    <td><b th:text="${master.fullName} ">[firstname]</b></td>
+                </tr>
+                <tr>
+                    <th>Master of:</th>
+                    <td><b th:text="${master.masterOf} ">[firstname]</b></td>
+                </tr>
+                <tr>
+                    <th>Address:</th>
+                    <td th:text="${master.address}">[address]</td>
+                </tr>
+                <tr>
+                    <th>City:</th>
+                    <td th:text="${master.city}">[city]</td>
+                </tr>
+                <tr>
+                    <th>Telephone:</th>
+                    <td th:text="${master.phone}">[telephone]</td>
+                </tr>
+                <tr>
+                    <th>Email:</th>
+                    <td th:text="${master.email}">[telephone]</td>
+                </tr>
+                <tr>
+                    <th>Services:</th>
+                    <td><span th:each="service : ${master.services}" th:text="${service.name }"></span></td>
+
+                </tr>
+                <tr>
+                    <th>Reviews:</th>
+
+                    <td>
+
+                        <div class="row">
+                            <span th:each="review : ${master.reviews}" th:text="|${review.value}; |"></span>
+                        </div>
+                        <div class="row">
+                            <a href="#" th:href="@{|/masters/${master.id}/review/new|}">
+                                Review this master
+                            </a>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
 </div>
 
