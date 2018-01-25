@@ -3,6 +3,7 @@ package kg.jedi.master.domain;
 import kg.jedi.master.domain.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = {"user","appointments"})
 
 @Entity
 @Table(name = "masters")
@@ -44,10 +46,10 @@ public class Master extends BaseEntity {
     @OneToMany(mappedBy = "master", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
     private List<Appointment> appointments;
 
-    @OneToMany(mappedBy = "master", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "master", cascade = CascadeType.REMOVE)
     private List<Review> reviews;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

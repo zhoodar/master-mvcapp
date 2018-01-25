@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"master"})
 
 @Entity
 @Table(name = "users")
@@ -27,6 +27,6 @@ public class User extends BaseEntity {
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.REMOVE})
     private Master master;
 }

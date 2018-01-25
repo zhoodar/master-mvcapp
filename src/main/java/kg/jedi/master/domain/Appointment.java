@@ -3,6 +3,7 @@ package kg.jedi.master.domain;
 import kg.jedi.master.domain.base.BaseEntity;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.time.LocalTime;
  */
 @Data
 @EqualsAndHashCode(callSuper = true)
+@ToString(exclude = {"master", "service"})
 
 @Entity
 @Table(name = "appointments")
