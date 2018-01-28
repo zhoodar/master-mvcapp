@@ -39,10 +39,10 @@ git clone https://github.com/zhoodar/master-mvcapp.git
 ```sh
 cd master-mvcapp
 mvn clean install
+mvn spring-boot:run - To run in dev mode
 cd target
-java -jar master-mvcapp-0.0.1-SNAPSHOT.jar
+java -jar master-0.0.1-SNAPSHOT.jar 
 ```
-###Try it
+### Try it
 
 - Now open your browser: http://localhost:8080/
-
