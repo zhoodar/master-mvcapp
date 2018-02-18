@@ -87,7 +87,7 @@
 
     <h2>Master Appointments </h2>
 
-    <div class="row">
+    <div class="row" th:if="${#lists.size(master.appointments) &gt; 0} ">
         <div class="col-md-8">
 
             <table class="table hover">
@@ -115,7 +115,10 @@
 
         </div>
     </div>
-
+    <div class="row" th:unless="${#lists.size(master.appointments) &gt; 0} ">
+        <div class="container">
+          <h4>No available appointments. </h4>
+        </div>
 </div>
 
 <script src="/webjars/jquery/3.1.1/jquery.min.js"></script>
