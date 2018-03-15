@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  web:
+    image: master-mvc
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - dbpostgres
+
+  dbpostgres:
+    image: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: master-mvc
+    volumes:
+      - ./.conr/postgres/data:/var/lib/postgresql/data

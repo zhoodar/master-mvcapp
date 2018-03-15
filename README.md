@@ -10,38 +10,18 @@ This is a simple CRUD, MVC app
 * Bootsrap
 
 ### Prerequisites
-* Git
- ```sh
- sudo apt-get install git
- ```
-* JDK 1.8 
-```sh 
-sudo add-apt-repository ppa:webupd8team/java -y
-sudo apt-get update
-sudo apt-get install oracle-java8-installer
-sudo apt-get install oracle-java8-set-default
-```
-* Maven
-```sh
-sudo apt-get install maven
-```
- Make sure you have installed all the prerequisites, To check, run following commands
- * java -version
- * mvn -version
- * git version
+* Docker 17+
+* Docker Compose version 1.18+ 
 ### Installation
-
+ [docker installation guid](https://docs.docker.com/install)
 * Clone this project
 ```sh
 git clone https://github.com/zhoodar/master-mvcapp.git
 ```
 * Build Application
 ```sh
-cd master-mvcapp
-mvn clean install
-mvn spring-boot:run - To run in dev mode
-cd target
-java -jar master-0.0.1-SNAPSHOT.jar 
+cd <cloned project directory>
+docker-compose up 
 ```
 ### Try it
 
