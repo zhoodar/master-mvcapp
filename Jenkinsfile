@@ -26,6 +26,10 @@ pipeline {
             }
         }
         stage('Deliver') {
+            agent {
+                docker {
+                    image 'openjdk:8-jre-alpine'
+                }
             steps {
                 sh 'java -jar /target/master-0.0.1-SNAPSHOT.jar'
             }
