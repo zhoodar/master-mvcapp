@@ -5,9 +5,6 @@ pipeline {
             image 'maven:3.5-jdk-8-alpine'
             args '-v /root/.m2:/root/.m2'
         }
-        docker {
-            image 'openjdk:8-jre-alpine'
-        }
     }
     stages {
         stage('Build') {
@@ -30,6 +27,7 @@ pipeline {
                 docker {
                     image 'openjdk:8-jre-alpine'
                 }
+            }
             steps {
                 sh 'java -jar /target/master-0.0.1-SNAPSHOT.jar'
             }
