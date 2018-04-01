@@ -2,7 +2,7 @@
 pipeline {
     agent {
         docker {
-            image '3.5-jdk-8-alpine'
+            image 'maven:3.5-jdk-8-alpine'
             args '-v /root/.m2:/root/.m2'
         }
     }
