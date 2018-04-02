@@ -6,11 +6,6 @@ pipeline {
             args '-v /root/.m2:/root/.m2'
         }
     }
-    agent {
-        docker {
-            image 'openjdk:8-jre-alpine'
-        }
-    }
     stages {
         stage('Build') {
             steps {
@@ -25,11 +20,6 @@ pipeline {
                 always {
                      junit 'target/surefire-reports/*.xml'
                 }
-            }
-        }
-        stage('Deliver') {
-            steps {
-                sh 'java -jar /target/master-0.0.1-SNAPSHOT.jar'
             }
         }
     }
